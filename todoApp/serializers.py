@@ -70,7 +70,7 @@ class ResetPasswordRequestSerializer(serializers.Serializer):
     def send_reset_email(self, email):
         user = User.objects.get(email=email)
         token =   PasswordResetTokenGenerator().make_token(user)
-        reset_link = f"http://localhost:8000/reset-password-confirm/{user.pk}/{token}/"
+        reset_link = f"https://restapitodoapp.onrender.com/reset-password-confirm/{user.pk}/{token}/"
 
         send_mail(
             "Restablecimiento de contraseña",
