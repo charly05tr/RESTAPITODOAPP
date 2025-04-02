@@ -11,6 +11,10 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = ('id', 'task', 'user', 'state', 'priority', 'created_at', 'ends_at')
         read_only_fields = ('created_at',)
         
+        def create(self, validated_data):
+            validated_data["user"] = self.context["request"].user  # Asigna el usuario autenticado
+            return super().create(validated_data)
+        
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

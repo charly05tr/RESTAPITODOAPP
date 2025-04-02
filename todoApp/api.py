@@ -12,13 +12,14 @@ class TaskViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+
     
 class TaskCreateAPIView(APIView):
     def post(self, request):
         data = request.data.copy()  # Copiamos los datos del request
         data["user"] = request.user.id  # Asignamos el usuario autenticado
 
-        serializer = TaskSerializer(data=data)
+        serializer = TaskSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
