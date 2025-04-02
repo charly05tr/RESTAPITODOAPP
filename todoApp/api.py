@@ -13,6 +13,17 @@ class TaskViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
     
+class TaskCreateAPIView(APIView):
+    def post(self, request):
+        data = request.data.copy()  # Copiamos los datos del request
+        data["user"] = request.user.id  # Asignamos el usuario autenticado
+
+        serializer = TaskSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]

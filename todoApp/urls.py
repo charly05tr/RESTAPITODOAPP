@@ -12,4 +12,5 @@ urlpatterns = [path('', include(router.urls)),
                path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
                path('api/token-auth/', obtain_auth_token, name='api_token_auth'),
                path('api/reset-password/', ResetPasswordRequestView.as_view(), name='reset_password_request'),
-               path('api/reset-password-confirm/', ResetPasswordConfirmView.as_view(), name='reset_password_confirm')]
+               path('api/reset-password-confirm/', ResetPasswordConfirmView.as_view(), name='reset_password_confirm'),
+               path('api/create-task', TaskCreateAPIView.as_view(), name='create-task')]
